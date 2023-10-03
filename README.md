@@ -1,4 +1,4 @@
-# MVDream - 3D Generation
+# MVDream - threestudio
 Yichun Shi, Peng Wang, Jianglong Ye, Long Mai, Kejie Li, Xiao Yang
 
 | [Project Page](https://mv-dream.github.io/) | [Paper](https://arxiv.org/abs/2308.16512) |

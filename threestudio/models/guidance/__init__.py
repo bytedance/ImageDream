@@ -5,4 +5,5 @@ from . import (
     stable_diffusion_guidance,
     stable_diffusion_vsd_guidance,
     zero123_guidance,
+    multiview_diffusion_guidance,
 )
