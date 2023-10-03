@@ -17,13 +17,6 @@ Install [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit-archive).
   - `sudo apt-key del 7fa2af80`
   - Run [command for CUDA 11.8 WSL-Ubuntu](https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local)
 
-## Git Clone
-
-```bash
-git clone https://github.com/threestudio-project/threestudio.git
-cd threestudio/
-```
-
 ## Install threestudio via Docker
 
 1. [Install Docker Engine](https://docs.docker.com/engine/install/).
