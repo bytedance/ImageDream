@@ -77,7 +77,7 @@ python launch.py --config configs/mvdream-sd21.yaml --train --gpu 0 system.promp
 
 In the paper, we use the configuration with soft-shading. It would need an A100 GPU in most cases to compute normal:
 ```sh
-# MVDream without shading (used in paper)
+# MVDream with shading (used in paper)
 python launch.py --config configs/mvdream-sd21-shading.yaml --train --gpu 0 system.prompt_processor.prompt="an astronaut riding a horse"
 ```
 
@@ -102,7 +102,7 @@ python launch.py --config path/to/trial/dir/configs/parsed.yaml --train --gpu 0 
 
 ## Tips
 
-- **Rescale Factor**. We introducte rescale adjustment from [Shanchuan et al.](https://arxiv.org/abs/2305.08891) to alleviate the texture over-saturation from large CFG guidance. However, in some cases, we find it to cause floating noises in the generated scene and consequently OOM issue. Therefore we reduce the rescale factor from 0.7 in original paper to 0.5. However, if you still encoder such problem, please try to further reduce `system.guidance.recon_std_rescale=0.3`.
+- **Rescale Factor**. We introducte rescale adjustment from [Shanchuan et al.](https://arxiv.org/abs/2305.08891) to alleviate the texture over-saturation from large CFG guidance. However, in some cases, we find it to cause floating noises in the generated scene and consequently OOM issue. Therefore we reduce the rescale factor from 0.7 in original paper to 0.5. However, if you still encounter such a problem, please try to further reduce `system.guidance.recon_std_rescale=0.3`.
 
 ## Credits
 
