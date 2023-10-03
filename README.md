@@ -7,7 +7,7 @@ Yichun Shi, Peng Wang, Jianglong Ye, Long Mai, Kejie Li, Xiao Yang
 - **This code is forked from [threestudio](https://github.com/threestudio-project/threestudio) for SDS and 3D Generation using MVDream.**
 - **For diffusion model and 2D image generation, check original [MVDream](https://github.com/bytedance/MVDream) repo.**
 
-![mvdream-threestudio-teaser](https://github.com/bytedance/MVDream-threestudio/assets/21265012/0596fd14-9bbe-4b10-9ef8-fccf83a1412e)
+![mvdream-threestudio-teaser](https://github.com/bytedance/MVDream-threestudio/assets/21265012/b2fef804-7f3f-4b3a-a1a9-8b51596deb54)
 
 ## Installation
 
