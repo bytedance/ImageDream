@@ -17,9 +17,7 @@ Yichun Shi, Peng Wang, Jianglong Ye, Long Mai, Kejie Li, Xiao Yang
 
 See [installation.md](docs/installation.md) for additional information, including installation via Docker.
 
-The following steps have been tested on Ubuntu20.04.
-
-- You must have an NVIDIA graphics card with at least 6GB VRAM and have [CUDA](https://developer.nvidia.com/cuda-downloads) installed.
+- You must have an NVIDIA graphics card with at least 20GB VRAM and have [CUDA](https://developer.nvidia.com/cuda-downloads) installed.
 - Install `Python >= 3.8`.
 - (Optional, Recommended) Create a virtual environment:
 
