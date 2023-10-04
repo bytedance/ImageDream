@@ -41,7 +41,7 @@ class RandomMultiviewCameraIterableDataset(RandomCameraIterableDataset):
         self.zoom_range = self.cfg.zoom_range
 
     def collate(self, batch) -> Dict[str, Any]:
-        assert self.batch_size % self.cfg.n_view == 0
+        assert self.batch_size % self.cfg.n_view == 0, f"batch_size ({self.batch_size}) must be dividable by n_view ({self.cfg.n_view})!"
         real_batch_size = self.batch_size // self.cfg.n_view
 
         # sample elevation angles

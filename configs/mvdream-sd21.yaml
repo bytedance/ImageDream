@@ -5,7 +5,7 @@ seed: 0
 
 data_type: "random-multiview-camera-datamodule"
 data:
-  batch_size: [8,4]
+  batch_size: [8,4] # must be dividable by n_view
   n_view: 4
   # 0-4999: 64x64, >=5000: 256x256
   width: [64, 256]

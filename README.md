@@ -53,10 +53,6 @@ pip install ninja
 pip install -r requirements.txt
 ```
 
-- (Optional, Recommended) The best-performing models in threestudio use the newly-released T2I model [DeepFloyd IF](https://github.com/deep-floyd/IF), which currently requires signing a license agreement. If you would like to use these models, you need to [accept the license on the model card of DeepFloyd IF](https://huggingface.co/DeepFloyd/IF-I-XL-v1.0), and login into the Hugging Face hub in the terminal by `huggingface-cli login`.
-
-- For contributors, see [here](https://github.com/threestudio-project/threestudio#contributing-to-threestudio).
-
 ### Install MVDream
 MVDream multi-view diffusion model is provided in a different codebase. Install it by:
 
@@ -101,7 +97,7 @@ python launch.py --config path/to/trial/dir/configs/parsed.yaml --train --gpu 0 
 ```
 
 ## Tips
-
+- **Preview**. Generating 3D content with SDS would a take a lot of time. So we suggest to use the 2D multi-view image generation [MVDream](https://github.com/bytedance/MVDream) to test if the model can really understand the text before using it for 3D generation.
 - **Rescale Factor**. We introducte rescale adjustment from [Shanchuan et al.](https://arxiv.org/abs/2305.08891) to alleviate the texture over-saturation from large CFG guidance. However, in some cases, we find it to cause floating noises in the generated scene and consequently OOM issue. Therefore we reduce the rescale factor from 0.7 in original paper to 0.5. However, if you still encounter such a problem, please try to further reduce `system.guidance.recon_std_rescale=0.3`.
 
 ## Credits
