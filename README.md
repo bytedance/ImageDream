@@ -1,7 +1,9 @@
 # MVDream - threestudio
 Yichun Shi, Peng Wang, Jianglong Ye, Long Mai, Kejie Li, Xiao Yang
 
-| [Project Page](https://mv-dream.github.io/) | [Paper](https://arxiv.org/abs/2308.16512) |
+| [Project Page](https://mv-dream.github.io/) | [Paper](https://arxiv.org/abs/2308.16512) | [Gallery](
+https://mv-dream.github.io/gallery_0.html) | [Comparison](https://mv-dream.github.io/test_0.html) |
+
 
 
 - **This code is forked from [threestudio](https://github.com/threestudio-project/threestudio) for SDS and 3D Generation using MVDream.**
