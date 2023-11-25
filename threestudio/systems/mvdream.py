@@ -11,7 +11,7 @@ from threestudio.utils.typing import *
 
 
 @threestudio.register("mvdream-system")
-class MVDreamSystem(BaseLift3DSystem):
+class ImageDreamSystem(BaseLift3DSystem):
     @dataclass
     class Config(BaseLift3DSystem.Config):
         visualize_samples: bool = False
@@ -29,18 +29,20 @@ class MVDreamSystem(BaseLift3DSystem):
         self.prompt_utils = self.prompt_processor()
 
     def on_load_checkpoint(self, checkpoint):
-        for k in list(checkpoint['state_dict'].keys()):
+        for k in list(checkpoint["state_dict"].keys()):
             if k.startswith("guidance."):
                 return
-        guidance_state_dict = {"guidance."+k : v for (k,v) in self.guidance.state_dict().items()}
-        checkpoint['state_dict'] = {**checkpoint['state_dict'], **guidance_state_dict}
-        return 
+        guidance_state_dict = {
+            "guidance." + k: v for (k, v) in self.guidance.state_dict().items()
+        }
+        checkpoint["state_dict"] = {**checkpoint["state_dict"], **guidance_state_dict}
+        return
 
     def on_save_checkpoint(self, checkpoint):
-        for k in list(checkpoint['state_dict'].keys()):
+        for k in list(checkpoint["state_dict"].keys()):
             if k.startswith("guidance."):
-                checkpoint['state_dict'].pop(k)
-        return 
+                checkpoint["state_dict"].pop(k)
+        return
 
     def forward(self, batch: Dict[str, Any]) -> Dict[str, Any]:
         return self.renderer(**batch)
@@ -48,9 +50,7 @@ class MVDreamSystem(BaseLift3DSystem):
     def training_step(self, batch, batch_idx):
         out = self(batch)
 
-        guidance_out = self.guidance(
-            out["comp_rgb"], self.prompt_utils, **batch
-        )
+        guidance_out = self.guidance(out["comp_rgb"], self.prompt_utils, **batch)
 
         loss = 0.0
 
@@ -89,7 +89,10 @@ class MVDreamSystem(BaseLift3DSystem):
             self.log("train/loss_z_variance", loss_z_variance)
             loss += loss_z_variance * self.C(self.cfg.loss.lambda_z_variance)
 
-        if hasattr(self.cfg.loss, "lambda_eikonal") and self.C(self.cfg.loss.lambda_eikonal) > 0:
+        if (
+            hasattr(self.cfg.loss, "lambda_eikonal")
+            and self.C(self.cfg.loss.lambda_eikonal) > 0
+        ):
             loss_eikonal = (
                 (torch.linalg.norm(out["sdf_grad"], ord=2, dim=-1) - 1.0) ** 2
             ).mean()

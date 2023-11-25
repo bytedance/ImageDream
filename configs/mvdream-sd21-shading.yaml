@@ -1,4 +1,4 @@
-name: "mvdream-sd21-rescale0.5-shading"
+name: "imagedream-sd21-rescale0.5-shading"
 tag: "${rmspace:${system.prompt_processor.prompt},_}"
 exp_root_dir: "outputs"
 seed: 0
@@ -21,7 +21,7 @@ data:
   eval_camera_distance: 3.0
   eval_fovy_deg: 40.
 
-system_type: "mvdream-system"
+system_type: "imagedream-system"
 system:
   geometry_type: "implicit-volume"
   geometry:
