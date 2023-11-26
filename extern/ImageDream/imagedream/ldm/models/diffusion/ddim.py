@@ -203,9 +203,7 @@ class DDIMSampler(object):
             else np.flip(timesteps)
         )
         total_steps = timesteps if ddim_use_original_steps else timesteps.shape[0]
-
         iterator = tqdm(time_range, desc="DDIM Sampler", total=total_steps)
-
         for i, step in enumerate(iterator):
             index = total_steps - i - 1
             ts = torch.full((b,), step, device=device, dtype=torch.long)
@@ -292,8 +290,6 @@ class DDIMSampler(object):
             else:
                 c_in = torch.cat([unconditional_conditioning, c])
             model_uncond, model_t = self.model.apply_model(x_in, t_in, c_in).chunk(2)
-            # model_t = self.model.apply_model(x, t, c, **kwargs)
-            # model_uncond = self.model.apply_model(x, t, unconditional_conditioning, **kwargs)
             model_output = model_uncond + unconditional_guidance_scale * (
                 model_t - model_uncond
             )

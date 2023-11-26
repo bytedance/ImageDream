@@ -32,7 +32,13 @@ def get_config_file(config_path):
     return cfg_file
 
 
-def build_model(model_name, ckpt_path=None, cache_dir=None):
+def build_model(model_name, config_path=None, ckpt_path=None, cache_dir=None):
+    if (config_path is not None) and (ckpt_path is not None):
+        config = OmegaConf.load(config_path)
+        model = instantiate_from_config(config.model)
+        model.load_state_dict(torch.load(ckpt_path, map_location="cpu"), strict=False)
+        return model
+        
     if not model_name in PRETRAINED_MODELS:
         raise RuntimeError(
             f"Model name {model_name} is not a pre-trained model. Available models are:\n- "
@@ -54,5 +60,5 @@ def build_model(model_name, ckpt_path=None, cache_dir=None):
             cache_dir=cache_dir,
         )
         print(f"Loading model from cache file: {ckpt_path}")
-    model.load_state_dict(torch.load(ckpt_path, map_location="cpu"))
+    model.load_state_dict(torch.load(ckpt_path, map_location="cpu"), strict=False)
     return model

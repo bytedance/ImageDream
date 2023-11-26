@@ -25,10 +25,12 @@ Note that you don't have to manually download the checkpoints for the following 
 ## Image-to-Multi-View
 Notice we will re-place the object in the center of RGBA image. A short description of the image is necessary to obtain good results since we train a model with join modality. For image only case, one may run a simple caption model such as [Llava]() or [BLIP2](), which may get similar results. 
 
-You can simply generate multi-view images by running the following command:
+You can simply generate multi-view images of pixel model by running the following command:
 
 ``` bash
-python scripts/imagedream.py  --image "./assets/astronaut.png" --text "an astronaut riding a horse"
+python scripts/imagedream.py  \
+  --image "./assets/astronaut.png" \
+  --text "an astronaut riding a horse"
 ```
 
 We also provide a gradio script to try out with GUI:

@@ -30,15 +30,15 @@ def i2i(
     dtype=torch.float32,
     device="cuda",
     camera=None,
-    num_frames=1,
+    num_frames=4,
     pixel_control=False,
     transform=None
 ):
     """ The function supports additional image prompt.
     Args:
-        model (_type_): _description_
-        image_size (_type_): _description_
-        prompt (_type_): _description_
+        model (_type_): the image dream model
+        image_size (_type_): size of diffusion output
+        prompt (_type_): text prompt for the image
         uc (_type_): _description_
         sampler (_type_): _description_
         ip (Image, optional): the image prompt. Defaults to None.
@@ -49,7 +49,7 @@ def i2i(
         dtype (_type_, optional): _description_. Defaults to torch.float32.
         device (str, optional): _description_. Defaults to "cuda".
         camera (_type_, optional): _description_. Defaults to None.
-        num_frames (int, optional): _description_. Defaults to 1.
+        num_frames (int, optional): _description_. Defaults to 4
         pixel_control: whether to use pixel conditioning. Defaults to False.
     """
     if type(prompt) != list:
@@ -101,22 +101,17 @@ def i2i(
 class ImageDreamDiffusion():
     def __init__(self, args) -> None:
         assert args.mode in ["pixel", "local"]
-        assert args.frame_num % 2 == 1 if args.mode == "pixel" else True
+        assert args.num_frames % 4 == 1 if args.mode == "pixel" else True
         
         set_seed(args.seed)
         dtype = torch.float16 if args.fp16 else torch.float32
         device = args.device
         batch_size = max(4, args.num_frames)
         
-        print("load t2i model ... ")
-        if args.config_path is None:
-            model = build_model(args.model_name, ckpt_path=args.ckpt_path)
-        else:
-            assert args.ckpt_path is not None, "ckpt_path must be specified!"
-            config = OmegaConf.load(args.config_path)
-            model = instantiate_from_config(config.model)
-            model.load_state_dict(torch.load(args.ckpt_path, map_location="cpu"))
-            
+        print("load image dream diffusion model ... ")
+        model = build_model(args.model_name, 
+                            config_path=args.config_path,
+                            ckpt_path=args.ckpt_path)
         model.device = device
         model.to(device)
         model.eval()
@@ -124,7 +119,7 @@ class ImageDreamDiffusion():
         neg_texts = "uniform low no texture ugly, boring, bad anatomy, blurry, pixelated,  obscure, unnatural colors, poor lighting, dull, and unclear."
         sampler = DDIMSampler(model)
         uc = model.get_learned_conditioning([neg_texts]).to(device)
-        print("load t2i model done . ")
+        print("image dream model load done . ")
 
         # pre-compute camera matrices
         if args.use_camera:
@@ -133,7 +128,7 @@ class ImageDreamDiffusion():
                 elevation=5,
                 azimuth_start=0,
                 azimuth_span=360,
-                extra_view=args.mode == "pixel"
+                extra_view=(args.mode == "pixel")
             )
             camera = camera.repeat(batch_size // args.num_frames, 1).to(device)
         else:
@@ -149,6 +144,7 @@ class ImageDreamDiffusion():
         
         self.dtype = dtype 
         self.device = device
+        self.batch_size = batch_size
         self.args = args
         self.model = model
         self.sampler = sampler
@@ -167,15 +163,16 @@ class ImageDreamDiffusion():
                 ip=ip,
                 step=50,
                 scale=5,
-                batch_size=self.args.batch_size,
+                batch_size=self.batch_size,
                 ddim_eta=0.0,
                 dtype=self.dtype,
                 device=self.device,
                 camera=self.camera,
                 num_frames=args.num_frames,
-                pixel_control=args.num_frames > 4
+                pixel_control=(args.mode == "pixel"),
+                transform=self.image_transform
             )
-            img = np.concatenate(img, 1)
+            img = np.concatenate(img[:4], 1)
             images.append(img)
         return images
        
@@ -202,7 +199,9 @@ if __name__ == "__main__":
     parser.add_argument("--suffix", type=str, default=", 3d asset")
     parser.add_argument("--size", type=int, default=256)
     parser.add_argument(
-        "--num_frames", type=int, default=4, help="num of frames (views) to generate"
+        "--num_frames", type=int, default=5, help=" \
+        num of frames (views) to generate, should be in [4 or 5],  \
+        5 for pixel control, 4 for local control"
     )
     parser.add_argument("--use_camera", type=int, default=1)
     parser.add_argument("--camera_elev", type=int, default=5)
@@ -218,13 +217,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     t = args.text + args.suffix
+    assert args.num_frames in [4, 5], "num_frames should be in [4, 5]"
     assert os.path.exists(args.image), "image does not exist!"
-    name = os.path.basename(args.image)
     ip = Image.open(args.image)
     ip = add_random_background(ip)
 
     image_dream = ImageDreamDiffusion(args)
     images = image_dream.diffuse(t, ip, n_test=3)
+    
+    name = os.path.basename(args.image).split(".")[0]
     images = np.concatenate(images, 0)
-    Image.fromarray(images).save(f"{name}_dream.png")
+    Image.fromarray(images).save(f"{name}_{args.mode}_dream.png")
 

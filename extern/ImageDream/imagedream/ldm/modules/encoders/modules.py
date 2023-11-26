@@ -197,6 +197,7 @@ class FrozenOpenCLIPEmbedder(AbstractEncoder):
         self.preprocess = preprocess
         self.device = device
         self.max_length = max_length
+        self.ip_mode = ip_mode
         if freeze:
             self.freeze()
         self.layer = layer
@@ -254,13 +255,25 @@ class FrozenOpenCLIPEmbedder(AbstractEncoder):
         x = x + visual.positional_embedding.to(x.dtype)
 
         # a patch_dropout of 0. would mean it is disabled and this function would do nothing but return what was passed in
-        x = visual.patch_dropout(x)
+        # x = visual.patch_dropout(x) 
         x = visual.ln_pre(x)
 
         x = x.permute(1, 0, 2)  # NLD -> LND
         hidden = self.image_transformer_forward(x)
         x = hidden[-2].permute(1, 0, 2)  # LND -> NLD
         return x
+    
+    def image_transformer_forward(self, x):
+        encoder_states = ()
+        trans = self.model.visual.transformer
+        for r in trans.resblocks:
+            if trans.grad_checkpointing and not torch.jit.is_scripting():
+                # TODO: handle kwargs https://github.com/pytorch/pytorch/issues/79887#issuecomment-1161758372
+                x = checkpoint(r, x, None, None, None)
+            else:
+                x = r(x, attn_mask=None)
+            encoder_states = encoder_states + (x, )
+        return encoder_states
     
     def encode_with_transformer(self, text):
         x = self.model.token_embedding(text)  # [batch_size, n_ctx, d_model]

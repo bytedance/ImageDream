@@ -173,7 +173,7 @@ class MemoryEfficientCrossAttention(nn.Module):
         
         has_ip = self.with_ip and (context is not None)
         if has_ip:
-            # context dim [b frame_num 77 + 4 1024 ]
+            # context dim [(b frame_num), (77 + img_token), 1024]
             token_len = context.shape[1]
             context_ip = context[:, -self.ip_dim:, :]
             k_ip = self.to_k_ip(context_ip)
@@ -226,10 +226,6 @@ class MemoryEfficientCrossAttention(nn.Module):
 
 
 class BasicTransformerBlock(nn.Module):
-    ATTENTION_MODES = {
-        "softmax-xformers": MemoryEfficientCrossAttention,
-    }
-
     def __init__(
         self,
         dim,
@@ -240,12 +236,11 @@ class BasicTransformerBlock(nn.Module):
         gated_ff=True,
         checkpoint=True,
         disable_self_attn=False,
+        **kwargs
     ):
         super().__init__()
-        assert attn_mode in self.ATTENTION_MODES
         assert XFORMERS_IS_AVAILBLE, "xformers is not available"
-        attn_mode = "softmax-xformers"
-        attn_cls = self.ATTENTION_MODES[attn_mode]
+        attn_cls = MemoryEfficientCrossAttention
         self.disable_self_attn = disable_self_attn
         self.attn1 = attn_cls(
             query_dim=dim,
@@ -261,6 +256,7 @@ class BasicTransformerBlock(nn.Module):
             heads=n_heads,
             dim_head=d_head,
             dropout=dropout,
+            **kwargs
         )  # is self-attn if context is none
         self.norm1 = nn.LayerNorm(dim)
         self.norm2 = nn.LayerNorm(dim)
@@ -375,7 +371,8 @@ class BasicTransformerBlock3D(BasicTransformerBlock):
         x = rearrange(x, "(b f) l c -> b (f l) c", f=num_frames).contiguous()
         x = (
             self.attn1(
-                self.norm1(x), context=context if self.disable_self_attn else None
+                self.norm1(x), 
+                context=context if self.disable_self_attn else None
             )
             + x
         )
@@ -399,6 +396,7 @@ class SpatialTransformer3D(nn.Module):
         disable_self_attn=False,
         use_linear=False,
         use_checkpoint=True,
+        **kwargs
     ):
         super().__init__()
         if exists(context_dim) and not isinstance(context_dim, list):
@@ -423,6 +421,7 @@ class SpatialTransformer3D(nn.Module):
                     context_dim=context_dim[d],
                     disable_self_attn=disable_self_attn,
                     checkpoint=use_checkpoint,
+                    **kwargs
                 )
                 for d in range(depth)
             ]

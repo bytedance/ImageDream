@@ -28,6 +28,7 @@ model:
         with_ip: True
         ip_dim: 16 # ip token length
         ip_mode: "local_resample"
+        ip_weight: 1.0 # adjust for similarity to image 
 
     vae_config:
       target: imagedream.ldm.models.autoencoder.AutoencoderKL

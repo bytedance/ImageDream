@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import torch
 import torch.nn as nn
 from transformers import AutoTokenizer, CLIPTextModel
+from PIL import Image
 
 import threestudio
 from threestudio.models.prompt_processors.base import PromptProcessor, hash_prompt
@@ -45,6 +46,7 @@ class StableDiffusionPromptProcessor(PromptProcessor):
             prompt = [prompt]
         if isinstance(negative_prompt, str):
             negative_prompt = [negative_prompt]
+            
         # Tokenize text and get embeddings
         tokens = self.tokenizer(
             prompt,
@@ -66,8 +68,6 @@ class StableDiffusionPromptProcessor(PromptProcessor):
             )[0]
 
         return text_embeddings, uncond_text_embeddings
-
-    ###
 
     @staticmethod
     def spawn_func(pretrained_model_name_or_path, prompts, cache_dir):

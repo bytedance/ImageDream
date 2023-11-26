@@ -64,7 +64,11 @@ pip install -e extern/imagedream
 In the paper, we use the configuration with soft-shading. It would need an A100 GPU in most cases to compute normal:
 ```sh
 # imagedream with shading (used in paper)
-python launch.py --config configs/imagedream-sd21-shading.yaml --train --gpu 0 system.prompt_processor.prompt="an astronaut riding a horse"
+python launch.py \
+  --config configs/imagedream-sd21-shading.yaml \
+  --train \
+  --gpu 0 \
+  system.prompt_processor.prompt="an astronaut riding a horse"
 ```
 
 ## Tips
