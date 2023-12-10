@@ -5,8 +5,7 @@ Peng Wang, Yichun Shi
 
 ## 
 - **This repo inherit content from repos of [LDM](), [MVDream]() and some adaptor module from [IP-Adaptor]()**
-- **It only includes the diffusion model and 2D image generation.**
-- **For 3D Generation, please check [ImageDream](https://github.com/bytedance/ImageDream).**
+- **It only includes the diffusion model and 2D image generation.For 3D Generation, please check [Here](https://github.com/bytedance/ImageDream).**
 
 
 ## Installation
@@ -37,6 +36,10 @@ We also provide a gradio script to try out with GUI:
 ``` bash
 python scripts/gradio_app.py
 ```
+Tips
+- The model is trained with same elevation between the input image prompt and synthesized views. Therefore, may adjust the camera elevation in ```get_camera``` for better results. In paper, we adopt a unified elevation.
+- This also applied for threestudio fusion for a better results.
+
 
 ## Acknowledgement
 This repository is heavily based on [Stable Diffusion](https://huggingface.co/stabilityai/stable-diffusion-2-1-base). We would like to thank the authors of these work for publicly releasing their code.
