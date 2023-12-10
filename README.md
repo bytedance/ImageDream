@@ -18,24 +18,22 @@ Clone the modelcard on the [Huggingface ImageDream Model Page](https://huggingfa
 
 In the paper, we use the configuration with soft-shading. It would need an A100 GPU in most cases to compute normal:
 ```sh
-gpu=0
-method=imagedream-sd21-shading
-name="astronaut"
-prompt="an astronaut riding a horse"
-image_path="./extern/ImageDream/assets/astronaut.png"
-ckpt_path="./extern/ImageDream/release_models/ImageDream/sd-v2.1-base-4view-ipmv.pt"
-config_path="./extern/ImageDream/imagedream/configs/sd_v2_base_ipmv.yaml"
+image_file="./extern/ImageDream/assets/astronaut.png"
+ckpt_file="./extern/ImageDream/release_models/ImageDream/sd-v2.1-base-4view-ipmv.pt"
+cfg_file="./extern/ImageDream/imagedream/configs/sd_v2_base_ipmv.yaml"
+
 python3 launch.py \
-    --config configs/$method.yaml \
-    --train \
-    --gpu $gpu \
-    name="${method}" \
-    tag=${name} \
-    system.prompt_processor.prompt="$prompt" \
-    system.prompt_processor.image_path="$image_path" \
-    system.guidance.ckpt_path="$ckpt_path"  \
-    system.guidance.config_path="$config_path" 
+    --config configs/$method.yaml --train --gpu 0 \
+    name="imagedream-sd21-shading" tag="astronaut" \
+    system.prompt_processor.prompt="an astronaut riding a horse" \
+    system.prompt_processor.image_path="${image_file}" \
+    system.guidance.ckpt_path="${ckpt_file}" \
+    system.guidance.config_path="${cfg_file}"
 ```
+
+
+***Check*** ```./threestudio/scripts/run_imagedream.sh``` ***for a bash example.***
+
 
 ## Credits
 - This code is forked from [threestudio](https://github.com/threestudio-project/threestudio) and [MVDream](https://github.com/bytedance/MVDream-threestudi) for SDS and 3D Generation.
