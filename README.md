@@ -29,13 +29,12 @@ python3 launch.py \
     system.guidance.config_path="${cfg_file}"
 ```
 
-
+***For diffusion only model, refer to subdir*** ```./extern/ImageDream/```
 ***Check*** ```./threestudio/scripts/run_imagedream.sh``` ***for a bash example.***
 
 
 ## Credits
 - This code is forked from [threestudio](https://github.com/threestudio-project/threestudio) and [MVDream](https://github.com/bytedance/MVDream-threestudi) for SDS and 3D Generation.
-- For diffusion only model, refer to subdir ```./extern/ImageDream/```
 
 ## Tips
 1. Place the object in the center and do not make it too large/small in the image.
