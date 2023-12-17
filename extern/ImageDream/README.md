@@ -14,18 +14,14 @@ Setup environment as in [Stable-Diffusion](https://github.com/Stability-AI/stabl
 pip install -r requirements.txt
 ```
 
-## Model Card
+## Image-to-Multi-View
 Clone the modelcard on the [Huggingface ImageDream Model Page](https://huggingface.co/Peng-Wang/ImageDream/) under ```./release_models/```
 
-
-## Image-to-Multi-View
 Replace the object in the center of RGBA image and a short description of the image is necessary to obtain good results. For image only case, one may run a simple caption model such as [Llava](https://llava.hliu.cc/) or [BLIP2](https://huggingface.co/spaces/Salesforce/BLIP2), which may get similar results. This also applies for 3D SDS.
 
 
 ``` bash
 export PYTHONPATH=$PYTHONPATH:./
-
-# test pixel version
 python3 scripts/demo.py  \
     --image "./assets/astronaut.png" \
     --text "an astronaut riding a horse" \

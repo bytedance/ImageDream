@@ -1,8 +1,7 @@
 # ImageDream Reconstruction
 Peng Wang, Yichun Shi
 
-[Project Page](https://image-dream.github.io/) | [Paper](https://arxiv.org/abs/2312.02201) | [Demo
-]()
+[Project Page](https://image-dream.github.io/) | [Paper](https://arxiv.org/abs/2312.02201) | [Demo]()
 
 [imagedream-threestudio-teaser](https://github.com/bytedance/ImageDream/assets/146033206/bcf67b1a-38f9-42cf-81df-b8b2f4fa007f)
 

@@ -1,5 +1,4 @@
 # Run this script under ImageDream/
-
 export PYTHONPATH=$PYTHONPATH:./
 
 # test pixel version
