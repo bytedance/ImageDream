@@ -15,8 +15,7 @@ pip install -r requirements.txt
 ```
 
 ## Model Card
-Our models are provided on the [Huggingface ImageDream Model Page](https://huggingface.co/Peng-Wang/ImageDream/) with the OpenRAIL license.
-We use the SD-2.1-base model in our experiments.  Note that you don't have to manually download the checkpoints for the following scripts.
+Clone the modelcard on the [Huggingface ImageDream Model Page](https://huggingface.co/Peng-Wang/ImageDream/) under ```./release_models/```
 
 
 ## Image-to-Multi-View
@@ -24,9 +23,16 @@ Replace the object in the center of RGBA image and a short description of the im
 
 
 ``` bash
-python scripts/imagedream.py  \
-  --image "./assets/astronaut.png" \
-  --text "an astronaut riding a horse"
+export PYTHONPATH=$PYTHONPATH:./
+
+# test pixel version
+python3 scripts/demo.py  \
+    --image "./assets/astronaut.png" \
+    --text "an astronaut riding a horse" \
+    --config_path "./imagedream/configs/sd_v2_base_ipmv.yaml" \
+    --ckpt_path "./release_models/ImageDream/sd-v2.1-base-4view-ipmv.pt" \
+    --mode "pixel" \
+    --num_frames 5
 ```
 
 Tips

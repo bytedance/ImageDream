@@ -16,6 +16,7 @@ Clone the modelcard on the [Huggingface ImageDream Model Page](https://huggingfa
 
 In the paper, we use the configuration with soft-shading. It would need an A100 GPU in most cases to compute normal:
 ```sh
+export PYTHONPATH=$PYTHONPATH:./extern/ImageDream
 image_file="./extern/ImageDream/assets/astronaut.png"
 ckpt_file="./extern/ImageDream/release_models/ImageDream/sd-v2.1-base-4view-ipmv.pt"
 cfg_file="./extern/ImageDream/imagedream/configs/sd_v2_base_ipmv.yaml"
