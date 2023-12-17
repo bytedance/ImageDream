@@ -7,7 +7,7 @@ prompt="an astronaut riding a horse"
 image_path="./extern/ImageDream/assets/astronaut.png"
 
 # for pixel [ImageDream-P]
-ckpt_path="./extern/ImageDream/release_models/sd-v2.1-base-4view-ipmv.pt"
+ckpt_path="./extern/ImageDream/release_models/ImageDream/sd-v2.1-base-4view-ipmv.pt"
 config_path="./extern/ImageDream/imagedream/configs/sd_v2_base_ipmv.yaml"
 python3 launch.py \
     --config configs/$method.yaml \
@@ -21,7 +21,7 @@ python3 launch.py \
     system.guidance.config_path="$config_path" 
 
 # for local [ImageDream-G]
-ckpt_path="./extern/ImageDream/release_models/sd-v2.1-base-4view-ipmv-local.pt"
+ckpt_path="./extern/ImageDream/release_models/ImageDream/sd-v2.1-base-4view-ipmv-local.pt"
 config_path="./extern/ImageDream/imagedream/configs/sd_v2_base_ipmv_local.yaml"
 python3 launch.py \
     --config configs/$method.yaml \

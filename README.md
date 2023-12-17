@@ -14,7 +14,7 @@ This part is the same as original [MVDream-threestudio](https://github.com/byted
 
 
 ## Quickstart
-Clone the modelcard on the [Huggingface ImageDream Model Page](https://huggingface.co/Peng-Wang/ImageDream/) under ```./extern/ImageDream/release_models/ImageDream```
+Clone the modelcard on the [Huggingface ImageDream Model Page](https://huggingface.co/Peng-Wang/ImageDream/) under ```./extern/ImageDream/release_models/```
 
 In the paper, we use the configuration with soft-shading. It would need an A100 GPU in most cases to compute normal:
 ```sh
