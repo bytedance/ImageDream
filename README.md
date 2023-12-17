@@ -4,9 +4,7 @@ Peng Wang, Yichun Shi
 [Project Page](https://image-dream.github.io/) | [Paper](https://arxiv.org/abs/2312.02201) | [Demo
 ]()
 
-
-<!-- ![mvdream-threestudio-teaser](https://github.com/bytedance/MVDream-threestudio/assets/21265012/b2fef804-7f3f-4b3a-a1a9-8b51596deb54) -->
-
+[imagedream-threestudio-teaser](https://github.com/bytedance/ImageDream/assets/146033206/bcf67b1a-38f9-42cf-81df-b8b2f4fa007f)
 
 ## Installation 
 
