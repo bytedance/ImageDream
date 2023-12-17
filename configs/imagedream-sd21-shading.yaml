@@ -17,7 +17,7 @@ data:
   camera_perturb: 0.
   center_perturb: 0.
   up_perturb: 0.
-  eval_camera_distance: 2.5
+  eval_camera_distance: 2.0
   eval_fovy_deg: 40.
 
 system_type: "imagedream-system"

@@ -39,9 +39,13 @@ python3 launch.py \
 - This code is forked from [threestudio](https://github.com/threestudio-project/threestudio) and [MVDream](https://github.com/bytedance/MVDream-threestudi) for SDS and 3D Generation.
 - For diffusion only model, refer to subdir ```./extern/ImageDream/```
 
+## Tips
+1. Place the object in the center and do not make it too large/small in the image.
+2. If you have an object cutting image edge, in config, tuning the parameters range of elevation and fov to be a larger range, e.g. ```[0, 30]```, otherwise, you may do image outpainting and follow tips 1.
+3. Check the results with ImageDream diffusion model before using it in 3D rendering to save time.
+
 
 ## Citing
-
 If you find ImageDream helpful, please consider citing:
 
 ``` bibtex
