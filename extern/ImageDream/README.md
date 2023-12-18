@@ -14,6 +14,11 @@ Setup environment as in [Stable-Diffusion](https://github.com/Stability-AI/stabl
 pip install -r requirements.txt
 ```
 
+To use ImageDream as a python module, you can install it by `pip install -e .` or:
+```bash
+pip install git+https://github.com/bytedance/ImageDream/#subdirectory=extern/ImageDream
+```
+
 ## Image-to-Multi-View
 Clone the modelcard on the [Huggingface ImageDream Model Page](https://huggingface.co/Peng-Wang/ImageDream/) under ```./release_models/```
 
