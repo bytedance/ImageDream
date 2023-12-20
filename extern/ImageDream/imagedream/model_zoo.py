@@ -11,13 +11,13 @@ from imagedream.ldm.util import instantiate_from_config
 
 PRETRAINED_MODELS = {
     "sd-v2.1-base-4view-ipmv": {
-        "config": "sd-v2-base-ipmv.yaml",
-        "repo_id": "ImageDream/ImageDream",
+        "config": "sd_v2_base_ipmv.yaml",
+        "repo_id": "Peng-Wang/ImageDream",
         "filename": "sd-v2.1-base-4view-ipmv.pt",
     },
     "sd-v2.1-base-4view-ipmv-local": {
-        "config": "sd-v2-base-ipmv-local.yaml",
-        "repo_id": "ImageDream/ImageDream",
+        "config": "sd_v2_base_ipmv_local.yaml",
+        "repo_id": "Peng-Wang/ImageDream",
         "filename": "sd-v2.1-base-4view-ipmv-local.pt",
     },
 }
