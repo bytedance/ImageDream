@@ -1,4 +1,4 @@
-# Not ready to use yet
+# Just copy from MVDream, Not ready to use yet
 
 import random
 import argparse
