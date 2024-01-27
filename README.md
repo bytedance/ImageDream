@@ -41,6 +41,9 @@ python3 launch.py \
 2. If you have an object cutting image edge, in config, tuning the parameters range of elevation and fov to be a larger range, e.g. ```[0, 30]```, otherwise, you may do image outpainting and follow tips 1.
 3. Check the results with ImageDream diffusion model before using it in 3D rendering to save time.
 
+## PreComputed Results
+- Since there is some randomness in diffusion model and time costly to get baseline results. We put our pre-computed results for reproducing Tab.1 in the paper in a [hugging face dataset card](https://huggingface.co/datasets/Peng-Wang/ImageDream)
+
 
 ## Citing
 If you find ImageDream helpful, please consider citing:
